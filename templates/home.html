@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!--About us -->
+<div style="background-image: url(https://www.shutterstock.com/shutterstock/photos/1892686795/display_1500/stock-photo-pastel-blue-and-white-concrete-stone-texture-for-background-in-summer-wallpaper-cement-and-sand-1892686795.jpg);">
+<section class="py-3 py-md-5">
+  <div class="container">
+    <div class="row gy-3 gy-md-4 gy-lg-0 align-items-lg-center">
+      <div class="col-12 col-lg-6">
+        <img class="img-fluid rounded" loading="lazy" data-mdb-animation-start="onHover"
+          src="https://media.istockphoto.com/id/1369754239/photo/university-student-in-white-background-stock-photo.jpg?s=612x612&w=0&k=20&c=LjFVDfjusWBjYTNliHV9DyXfApPGc8DmgBGEtfVgQ0Q="
+          alt="About 2">
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="row justify-content-xl-center">
+          <div class="col-12 col-xl-10">
+            <h2 class=" d-flex"><i class="fa fa-graduation-cap fw-bold fs-2" aria-hidden="true"> About- HBK</i></h2>
+            <p class="text-justify fs-5">Sunrise Academy was founded in 2002, starting 
+              with a modest group of students eager to learn.
+               Over the years, Sunrise Academy has grown into a vibrant institution, 
+               nurturing a diverse array of students who shine brightly both locally and internationally. 
+               Situated in the heart of the community, Sunrise Academy is a co-educational 
+               English medium school dedicated to fostering academic excellence and personal growth in a supportive environment.
+            </p>
+            <a href="{% url 'aboutSchool' %}"><button type="button" class="btn bsb-btn-xl btn-outline-primary rounded-pill"> Read-more</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+<!--about us end-->
+<!--gallery start-->
+<div class="container my-5">
+  <h2 class=" d-flex justify-content-center"><i class="fa fa-image fw-bold fs-2" aria-hidden="true"> Gallery</i></h2>
+  <div class="row gallery">
+    <div class="col-lg-4 col-md-6 mb-4">
+      <img src="https://cdn.prod.website-files.com/65de4c6f8dc17dc010f8ac55/65de4e8fa9dea47849bfe182_654d5b61a2e2c9c8d6cdeae7_5f57c46384cca65e79589acf_students1.jpeg" alt="Gallery Image 1" class="img-fluid">
+    </div>
+    <div class="col-lg-4 col-md-6 mb-4">
+      <img src="https://cdn.prod.website-files.com/65de4c6f8dc17dc010f8ac55/65de4e8fa9dea47849bfe182_654d5b61a2e2c9c8d6cdeae7_5f57c46384cca65e79589acf_students1.jpeg" alt="Gallery Image 2" class="img-fluid">
+    </div>
+    <div class="col-lg-4 col-md-6 mb-4">
+      <img src="https://cdn.prod.website-files.com/65de4c6f8dc17dc010f8ac55/65de4e8fa9dea47849bfe182_654d5b61a2e2c9c8d6cdeae7_5f57c46384cca65e79589acf_students1.jpeg" alt="Gallery Image 3" class="img-fluid">
+    </div>
+    <div class="col-lg-4 col-md-6 mb-4">
+      <img src="https://cdn.prod.website-files.com/65de4c6f8dc17dc010f8ac55/65de4e8fa9dea47849bfe182_654d5b61a2e2c9c8d6cdeae7_5f57c46384cca65e79589acf_students1.jpeg" alt="Gallery Image 4" class="img-fluid">
+    </div>
+    <div class="col-lg-4 col-md-6 mb-4">
+      <img src="https://cdn.prod.website-files.com/65de4c6f8dc17dc010f8ac55/65de4e8fa9dea47849bfe182_654d5b61a2e2c9c8d6cdeae7_5f57c46384cca65e79589acf_students1.jpeg" alt="Gallery Image 5" class="img-fluid">
+    </div>
+    <div class="col-lg-4 col-md-6 mb-4">
+      <img src="https://cdn.prod.website-files.com/65de4c6f8dc17dc010f8ac55/65de4e8fa9dea47849bfe182_654d5b61a2e2c9c8d6cdeae7_5f57c46384cca65e79589acf_students1.jpeg" alt="Gallery Image 6" class="img-fluid">
+    </div>
+  </div>
+</div>
+{% endblock content %}

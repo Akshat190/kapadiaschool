@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for celebration in celebration %}
+<img class="card-top" src="{{ celebration.image.url }}" />
+<p>{{ celebration.festivalname }}</p>
+{% endfor %}
+{% endblock content %}
