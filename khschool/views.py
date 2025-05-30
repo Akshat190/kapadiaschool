@@ -7,19 +7,24 @@ def home(request):
     carousel_images = []
     celebrations = []
     
-    # Handle the case where the CarouselImage table might not exist yet
-    try:
-        carousel_images = CarouselImage.objects.filter(is_active=True).order_by('order')
-    except Exception as e:
-        # Just continue with empty list if there's an error
-        pass
+    # Check if the tables exist in the database
+    from django.db import connection
+    tables = connection.introspection.table_names()
     
-    # Get celebration data for the home page
-    try:
-        celebrations = Celebration.objects.all().order_by('-date')[:3]
-    except Exception as e:
-        # Just continue with empty list if there's an error
-        pass
+    # Only try to query if the tables exist
+    if 'khschool_carouselimage' in tables:
+        try:
+            carousel_images = CarouselImage.objects.filter(is_active=True).order_by('order')
+        except Exception as e:
+            # Log the error but continue with empty list
+            print(f"Error loading carousel images: {str(e)}")
+    
+    if 'khschool_celebration' in tables:
+        try:
+            celebrations = Celebration.objects.all().order_by('-date')[:3]
+        except Exception as e:
+            # Log the error but continue with empty list
+            print(f"Error loading celebrations: {str(e)}")
         
     context = {
         'carousel_images': carousel_images,
