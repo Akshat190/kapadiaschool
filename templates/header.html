@@ -1,0 +1,67 @@
+{% load static %}
+<!-- Include header CSS -->
+<link href="{% static 'css/header.css' %}" rel='stylesheet' type='text/css'>
+<!-- Navbar with logo in same line -->
+<div class="container-fluid p-0">
+  <nav class="navbar navbar-expand-lg py-2 px-lg-5">
+    <a href="{% url 'home' %}" class="navbar-brand me-4">
+      <img src="{% static 'image/khe.png' %}" alt="Kapadia High School" class="header-logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon fa fa-bars fa-2x my-custom-class justify-content-center"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <!-- <a href="{% url 'home' %}" class="nav-link">Home</a> -->
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="aboutDropdown" role="button" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">Who are we?</a>
+          <div class="dropdown-menu" aria-labelledby="aboutDropdown">
+            <a class="dropdown-item" href="{% url 'aboutSchool' %}">About-us</a>
+            <a class="dropdown-item" href="#">Institutional Goals</a>
+            <a class="dropdown-item" href="{% url 'brief' %}">Executive Brief</a>
+            <a class="dropdown-item" href="#">Our Team</a>
+            <a class="dropdown-item" href="#">Success Stories</a>
+            <a class="dropdown-item" href="#">Testimonials</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="schoolDropdown" role="button" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">Our premises</a>
+          <div class="dropdown-menu" aria-labelledby="schoolDropdown">
+            <a class="dropdown-item" href="{% url 'chandkheda' %}">Chandkheda</a>
+            <a class="dropdown-item" href="{% url 'chattral' %}">Chhatral</a>
+            <a class="dropdown-item" href="{% url 'iffco' %}">IFFCO Township</a>
+            <a class="dropdown-item" href="{% url 'kadi' %}">Kadi</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="developDropdown" role="button" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">Development</a>
+          <div class="dropdown-menu" aria-labelledby="developDropdown">
+            <a class="dropdown-item" href="#">Activites</a>
+            <a class="dropdown-item" href="#">Blog</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="studentDropdown" role="button" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">Student Showcase</a>
+          <div class="dropdown-menu" aria-labelledby="studentDropdown">
+            <a class="dropdown-item" href="{% url 'gallery' %}">Gallery</a>
+            <a class="dropdown-item" href="#">Achievements</a>
+            <a class="dropdown-item" href="#">Other than Academics</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'contact' %}" class="nav-link">Contact Us</a>
+        </li>
+      </ul>
+      <a href="#" class="btn btn-primary px-4 py-2 d-none d-lg-block admission-btn">Admission Open</a>
+    </div>
+  </nav>
+</div>
+
+

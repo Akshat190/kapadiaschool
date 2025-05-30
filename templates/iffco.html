@@ -1,4 +1,11 @@
 {% extends 'base.html' %}
+{% load static %} 
+
+{% block title %}IFFCO Township Campus - Kapadia High School{% endblock %}
+
+{% block page_css %}
+<link href="{% static 'css/campus.css' %}" rel='stylesheet' type='text/css'>
+{% endblock page_css %}
 
 {% block content %}
 {% load static %}
@@ -14,7 +21,7 @@
         
         <!-- Right side - Information -->
         <div class="col-md-8">
-            <h1 class="text-warning mb-4">IFFCO Township</h1>
+            <h1 class="campus-title">IFFCO Township</h1>
             
             <div class="campus-details">
                 <div class="row mb-2">
@@ -43,37 +50,37 @@
         <div class="col-12">
             <div class="row mb-3">
                 <div class="col-md-4 mb-3">
-                    <a href="#" class="btn btn-primary w-100">SMART BOARDS</a>
+                    <a href="#" class="facility-btn">SMART BOARDS</a>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <a href="#" class="btn btn-primary w-100">PLAYGROUND</a>
+                    <a href="#" class="facility-btn">PLAYGROUND</a>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <a href="#" class="btn btn-primary w-100">LIBRARY</a>
+                    <a href="#" class="facility-btn">LIBRARY</a>
                 </div>
             </div>
             
             <div class="row mb-3">
                 <div class="col-md-4 mb-3">
-                    <a href="#" class="btn btn-primary w-100">ART ROOM</a>
+                    <a href="#" class="facility-btn">ART ROOM</a>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <a href="#" class="btn btn-primary w-100">MUSIC ROOM</a>
+                    <a href="#" class="facility-btn">MUSIC ROOM</a>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <a href="#" class="btn btn-primary w-100">CURATED LABS</a>
+                    <a href="#" class="facility-btn">CURATED LABS</a>
                 </div>
             </div>
             
             <div class="row">
                 <div class="col-md-4 mb-3">
-                    <a href="#" class="btn btn-primary w-100">TRANSPORTATION</a>
+                    <a href="#" class="facility-btn">TRANSPORTATION</a>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <a href="#" class="btn btn-primary w-100">MEDICAL ROOM</a>
+                    <a href="#" class="facility-btn">MEDICAL ROOM</a>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <a href="#" class="btn btn-primary w-100">GREEN CAMPUS</a>
+                    <a href="#" class="facility-btn">GREEN CAMPUS</a>
                 </div>
             </div>
         </div>
@@ -111,44 +118,10 @@
   </div>
 </div>
 
-<style>
-    .campus-details {
-        font-size: 1.1rem;
-    }
-    
-    .btn-primary {
-        background-color: #2c3e50;
-        border-color: #2c3e50;
-        padding: 10px 15px;
-        font-weight: 500;
-    }
-    
-    .btn-primary:hover {
-        background-color: #1e2b37;
-        border-color: #1e2b37;
-    }
-    
-    h1.text-warning {
-        color: #f39c12 !important;
-    }
-    
-    /* Modal styling */
-    .modal-header {
-        background-color: #2c3e50;
-        color: white;
-    }
-    
-    .circle-bullet {
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        background-color: #000;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
-    
-    .modal-body li {
-        margin-bottom: 10px;
-    }
-</style>
+{% block page_js %}
+<script>
+    // JavaScript for modal functionality if needed
+</script>
+{% endblock page_js %}
+
 {% endblock content %}

@@ -1,0 +1,127 @@
+{% load static %}
+<!--Footer Start -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="footer-col col">
+        <h4>Kapadia High School </h4>
+        <div class="social-links">
+          <p class="school-details">Established in the year 1956. Managed by Shri N.H. Kapadia Education Trust. Classes from K-12 (Science, Commerce & Humanities Stream). Provides excellent infrastructure, sound organizational support and ample opportunity to students.</p>
+          <a href="#"><i class="fa fa-facebook-f"></i></a>
+          <a href="#"><i class="fa fa-twitter"></i></a>
+          <a href="https://www.instagram.com/_tirth._.shah_?igsh=MWJwdnZ0MHVwMmNzcQ%3D%3D&utm_source=qr"><i class="fa fa-instagram"></i></a>
+          <a href="https://chat.whatsapp.com/DjRwLEhzaqy5BjutusOsl6"><i class="fa fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col col">
+        <h4>Our Links</h4>
+        <ul>
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Activities</a></li>
+          <li><a href="{% url 'contact' %}">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col col">
+        <h4>Other Links</h4>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Admissions</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">News & Events</a></li>
+          <li><a href="#">Resources</a></li>
+        </ul>
+      </div>
+      <div class="footer-col col">
+        <h4>Contact Us</h4>
+        <ul>
+          <li><i class="fa fa-phone"></i> Phone: +916354368335</li>
+          <li><i class="fa fa-map-marker"></i> Location: Near Chhatral Railway Station, Kalol, Pratappura, Gujarat 382721</li>
+          <li><i class="fa fa-envelope"></i> Email: info@kapadiahighschool.com </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: #003264;
+    padding: 50px 0;
+    color: white;
+    margin-top: 50px;
+  }
+  
+  .footer-col {
+    width: 25%;
+    padding: 0 15px;
+  }
+  
+  .footer-col h4 {
+    font-size: 18px;
+    color: #ffcc00;
+    margin-bottom: 20px;
+    font-weight: 500;
+    position: relative;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .footer-col ul li {
+    margin-bottom: 10px;
+  }
+  
+  .footer-col ul li a {
+    font-size: 16px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 300;
+    display: block;
+    transition: all 0.3s ease;
+  }
+  
+  .footer-col ul li a:hover {
+    color: #ffcc00;
+    padding-left: 8px;
+  }
+  
+  .footer-col .social-links a {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 0 10px 10px 0;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    color: #ffffff;
+    transition: all 0.5s ease;
+  }
+  
+  .footer-col .social-links a:hover {
+    color: #003264;
+    background-color: #ffcc00;
+  }
+  
+  .school-details {
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 767px) {
+    .footer-col {
+      width: 50%;
+      margin-bottom: 30px;
+    }
+  }
+  
+  @media (max-width: 574px) {
+    .footer-col {
+      width: 100%;
+    }
+  }
+</style>

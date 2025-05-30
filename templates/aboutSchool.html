@@ -1,32 +1,368 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
-<div class=" d-flex justify-content-center fw-bold fs-1 mt-3">
-  <p><i class="fa fa-graduation-cap"></i> H.B.Kapadia High School</p>
+<!-- Page Header -->
+<div class="about-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h1 class="page-title"><i class="fa fa-school"></i> About Our School</h1>
+        <div class="title-underline"></div>
+        <p class="lead">Building Character, Creating Futures</p>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="container fs-5">
-  <img
-    src="https://www.greatschools.org/gk/wp-content/uploads/2014/03/The-school-visit-what-to-look-for-what-to-ask-1-750x325.jpg"
-    alt="Gallery Image 1" class="img-fluid" style="width: 100%;height: 100%;">
-  <p class="mt-2 "> Sunrise Academy, established in 2002, began its journey with a small yet passionate group
-    of students and educators who shared a vision of academic excellence and holistic development.
-    Over the years, this humble institution has blossomed into a renowned educational establishment,
-    recognized for its commitment to nurturing young minds. The school, nestled in the heart of the community,
-    has become a beacon of learning and personal growth. With a sprawling campus that houses state-of-the-art
-    facilities, Sunrise Academy offers a dynamic and engaging environment where students are encouraged
-    to explore their talents and pursue their ambitions.</p>
-  <p> The academy’s co-educational, English-medium curriculum
-    is meticulously designed to foster critical thinking, creativity, and leadership. Guided by a team of
-    dedicated teachers, students at Sunrise Academy receive not only a robust academic education but also
-    the values and skills needed to thrive in an ever-changing world.
-  </p>
-  <p>The diverse student body, like a garden
-    in full bloom, represents a multitude of cultures and perspectives, creating a rich tapestry of experiences
-    that enriches the learning journey. Graduates of Sunrise Academy carry the school’s legacy with them,
-    spreading their wings across the globe and contributing positively to society.As Sunrise Academy continues to grow
-    and evolve,
-    it remains steadfast in its mission to inspire and empower the next generation of leaders, thinkers, and innovators.
-    The school is not just an institution; it is a nurturing community where every student is valued, every achievement
-    is celebrated, and every dream is given the wings to soar.</p>
-</div>
+
+<!-- About Section -->
+<section class="about-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <div class="about-content">
+          <h2>Our Legacy of Excellence</h2>
+          <div class="section-underline"></div>
+          <p>Founded in 1956, Kapadia High School has been a cornerstone of educational excellence for over six decades. Our institution has consistently maintained high academic standards while nurturing the holistic development of our students.</p>
+          <p>At Kapadia High School, we believe in creating an environment where students can discover their potential, develop their skills, and grow into responsible citizens who contribute positively to society.</p>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="about-image-container">
+          <img src="{% static 'image/about-school.jpg' %}" alt="School Building" class="img-fluid about-image">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mission & Vision Section -->
+<section class="mission-vision-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="mission-card">
+          <div class="mission-icon">
+            <i class="fa fa-bullseye"></i>
+          </div>
+          <h3>Our Mission</h3>
+          <div class="card-underline"></div>
+          <p>To provide quality education that develops intellectual curiosity, critical thinking, and a lifelong love for learning in a nurturing and inclusive environment.</p>
+          <ul class="mission-points">
+            <li><i class="fa fa-check-circle"></i> Academic Excellence</li>
+            <li><i class="fa fa-check-circle"></i> Character Development</li>
+            <li><i class="fa fa-check-circle"></i> Community Engagement</li>
+            <li><i class="fa fa-check-circle"></i> Inclusive Education</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="vision-card">
+          <div class="vision-icon">
+            <i class="fa fa-eye"></i>
+          </div>
+          <h3>Our Vision</h3>
+          <div class="card-underline"></div>
+          <p>To be recognized as a premier educational institution that empowers students to become global citizens who are intellectually competent, morally upright, and socially responsible.</p>
+          <ul class="vision-points">
+            <li><i class="fa fa-lightbulb"></i> Innovative Learning</li>
+            <li><i class="fa fa-lightbulb"></i> Global Perspective</li>
+            <li><i class="fa fa-lightbulb"></i> Ethical Leadership</li>
+            <li><i class="fa fa-lightbulb"></i> Sustainable Development</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our Approach Section -->
+<section class="about-section bg-section">
+  <div class="container">
+    <h2 class="section-title text-center">Our Educational Approach</h2>
+    <div class="section-divider mx-auto"></div>
+    <div class="row mt-5">
+      <div class="col-md-4 mb-4">
+        <div class="approach-card">
+          <div class="approach-icon">
+            <i class="fa fa-book"></i>
+          </div>
+          <h3>Academic Excellence</h3>
+          <p>Our co-educational, English-medium curriculum is meticulously designed to foster critical thinking, creativity, and leadership. Guided by a team of dedicated teachers, students receive a robust academic education.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="approach-card">
+          <div class="approach-icon">
+            <i class="fa fa-heart"></i>
+          </div>
+          <h3>Character Development</h3>
+          <p>We believe in nurturing not just intelligent minds but also compassionate hearts. Our students learn values like integrity, respect, and responsibility that help them become well-rounded individuals.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="approach-card">
+          <div class="approach-icon">
+            <i class="fa fa-globe"></i>
+          </div>
+          <h3>Global Perspective</h3>
+          <p>The diverse student body represents a multitude of cultures and perspectives, creating a rich tapestry of experiences that enriches the learning journey and prepares students for a global future.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Legacy Section -->
+<section class="about-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+        <div class="about-image-container">
+          <img src="https://media.istockphoto.com/id/1369754239/photo/university-student-in-white-background-stock-photo.jpg?s=612x612&w=0&k=20&c=LjFVDfjusWBjYTNliHV9DyXfApPGc8DmgBGEtfVgQ0Q="
+            alt="Students" class="img-fluid about-image">
+        </div>
+      </div>
+      <div class="col-lg-6 order-lg-1">
+        <div class="about-content">
+          <h2 class="section-title">Our Legacy & Future</h2>
+          <div class="section-divider"></div>
+          <p>With a sprawling campus that houses state-of-the-art facilities, H.B. Kapadia High School offers a dynamic and engaging environment where students are encouraged to explore their talents and pursue their ambitions.</p>
+          <p>Graduates of our school carry its legacy with them, spreading their wings across the globe and contributing positively to society. As we continue to grow and evolve, we remain steadfast in our mission to inspire and empower the next generation of leaders, thinkers, and innovators.</p>
+          <p>H.B. Kapadia High School is not just an institution; it is a nurturing community where every student is valued, every achievement is celebrated, and every dream is given the wings to soar.</p>
+          <a href="#" class="btn btn-cta mt-3">Explore Our Campuses</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Page Header */
+  .about-header {
+    background-color: #003264;
+    padding: 60px 0;
+    margin-bottom: 40px;
+    color: #FFFFFF;
+  }
+  
+  .page-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 15px;
+  }
+  
+  .page-title i {
+    color: #F4C430;
+    margin-right: 10px;
+  }
+  
+  .title-underline {
+    height: 4px;
+    width: 80px;
+    background-color: #F4C430;
+    margin: 0 auto 20px;
+  }
+  
+  .lead {
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: #E5E7EB;
+  }
+  
+  /* About Section */
+  .about-section {
+    padding: 60px 0;
+    background-color: #F9FAFB;
+  }
+  
+  .about-content h2 {
+    font-size: 2.5rem;
+    color: #374151;
+    margin-bottom: 15px;
+    font-weight: 700;
+  }
+  
+  .section-underline {
+    height: 3px;
+    width: 60px;
+    background-color: #F4C430;
+    margin-bottom: 25px;
+  }
+  
+  .about-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #374151;
+    margin-bottom: 20px;
+  }
+  
+  .about-image-container {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #E5E7EB;
+  }
+  
+  .about-image {
+    width: 100%;
+    height: auto;
+    transition: transform 0.5s ease;
+  }
+  
+  .about-image:hover {
+    transform: scale(1.03);
+  }
+  
+  /* Mission & Vision Section */
+  .mission-vision-section {
+    padding: 70px 0;
+    background-color: #FFFFFF;
+  }
+  
+  .mission-card, .vision-card {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    padding: 30px;
+    height: 100%;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #E5E7EB;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .mission-card:hover, .vision-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    border-color: #4DA8DA;
+  }
+  
+  .card-underline {
+    height: 3px;
+    width: 50px;
+    background-color: #F4C430;
+    margin-bottom: 20px;
+  }
+  
+  .mission-icon, .vision-icon {
+    width: 70px;
+    height: 70px;
+    background-color: #003264;
+    color: #F4C430;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    box-shadow: 0 5px 15px rgba(0, 50, 100, 0.2);
+  }
+  
+  .mission-card h3, .vision-card h3 {
+    font-size: 1.8rem;
+    color: #374151;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  
+  .mission-card p, .vision-card p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #374151;
+    margin-bottom: 25px;
+  }
+  
+  .mission-points, .vision-points {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .mission-points li, .vision-points li {
+    padding: 8px 0;
+    font-size: 1.1rem;
+    color: #374151;
+    display: flex;
+    align-items: center;
+  }
+  
+  .mission-points li i, .vision-points li i {
+    color: #4DA8DA;
+    margin-right: 10px;
+    font-size: 1.2rem;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 992px) {
+    .about-header {
+      padding: 50px 0;
+    }
+    
+    .page-title {
+      font-size: 2.4rem;
+    }
+    
+    .about-content h2 {
+      font-size: 2.2rem;
+    }
+    
+    .mission-card, .vision-card {
+      margin-bottom: 30px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .about-header {
+      padding: 40px 0;
+    }
+    
+    .page-title {
+      font-size: 2rem;
+    }
+    
+    .lead {
+      font-size: 1.2rem;
+    }
+    
+    .about-content h2 {
+      font-size: 2rem;
+      text-align: center;
+    }
+    
+    .section-underline {
+      margin: 0 auto 25px;
+    }
+    
+    .about-content p {
+      text-align: center;
+    }
+    
+    .about-image-container {
+      margin-top: 30px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .about-header {
+      padding: 30px 0;
+    }
+    
+    .page-title {
+      font-size: 1.8rem;
+    }
+    
+    .about-section {
+      padding: 40px 0;
+    }
+    
+    .mission-vision-section {
+      padding: 40px 0;
+    }
+    
+    .mission-card, .vision-card {
+      padding: 20px;
+    }
+  }
+</style>
 
 {% endblock content %}
