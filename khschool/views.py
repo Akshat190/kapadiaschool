@@ -25,8 +25,21 @@ def home(request):
 
 #gallery page
 def gallery(request):
-    celebrations = Celebration.objects.all()
-    return render(request,'gallery.html',{'celebration':celebrations})
+    # Get all celebrations with their related photos
+    celebrations = Celebration.objects.all().order_by('-date')
+    
+    # For each celebration, get its additional photos
+    for celebration in celebrations:
+        # Add a photo_count attribute to each celebration object
+        try:
+            photos = celebration.celebrationphoto_set.all().order_by('order')
+            celebration.additional_photos = list(photos)
+            celebration.photo_count = len(celebration.additional_photos)
+        except:
+            celebration.additional_photos = []
+            celebration.photo_count = 0
+    
+    return render(request, 'gallery.html', {'celebration': celebrations})
 
 #contact page
 def contact(request):

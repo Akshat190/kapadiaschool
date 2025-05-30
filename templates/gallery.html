@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load custom_filters %}
 
 {% block content %}
   <div class="gallery-header">
@@ -42,10 +41,10 @@
                     <a href="{{ celebration.image.url }}" class="gallery-zoom" target="_blank">
                       <i class="fa fa-search-plus"></i>
                     </a>
-                    {% if celebration_photos|get_item:celebration.id %}
+                    {% if celebration.photo_count > 0 %}
                       <a href="#" class="gallery-more" data-bs-toggle="modal" data-bs-target="#galleryModal{{ celebration.id }}">
                         <i class="fa fa-plus"></i>
-                        <span class="photo-count">{{ celebration_photos|get_item:celebration.id|length }}</span>
+                        <span class="photo-count">{{ celebration.photo_count }}</span>
                       </a>
                     {% endif %}
                   </div>
@@ -60,7 +59,7 @@
           </div>
           
           <!-- Modal for additional photos -->
-          {% if celebration_photos|get_item:celebration.id %}
+          {% if celebration.photo_count > 0 %}
             <div class="modal fade" id="galleryModal{{ celebration.id }}" tabindex="-1" aria-labelledby="galleryModalLabel{{ celebration.id }}" aria-hidden="true">
               <div class="modal-dialog modal-xl">
                 <div class="modal-content">
@@ -81,7 +80,7 @@
                               </div>
                             </div>
                             <!-- Additional photos -->
-                            {% for photo in celebration_photos|get_item:celebration.id %}
+                            {% for photo in celebration.additional_photos %}
                               <div class="carousel-item">
                                 <img src="{{ photo.photo.url }}" class="d-block w-100 carousel-img" alt="{{ photo.caption|default:celebration.festivalname }}">
                                 <div class="carousel-caption d-none d-md-block">
@@ -112,7 +111,7 @@
                             <img src="{{ celebration.image.url }}" alt="{{ celebration.festivalname }}" class="img-thumbnail">
                           </div>
                           <!-- Additional photos thumbnails -->
-                          {% for photo in celebration_photos|get_item:celebration.id %}
+                          {% for photo in celebration.additional_photos %}
                             <div class="thumbnail" data-bs-target="#carouselGallery{{ celebration.id }}" data-bs-slide-to="{{ forloop.counter }}">
                               <img src="{{ photo.photo.url }}" alt="{{ photo.caption|default:celebration.festivalname }}" class="img-thumbnail">
                             </div>
