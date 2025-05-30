@@ -7,8 +7,24 @@ def home(request):
 
 #gallery page
 def gallery(request):
-    celebrations = Celebration.objects.all()
-    return render(request,'gallery.html',{'celebration':celebrations})
+    # Get all celebrations with their related photos
+    celebrations = Celebration.objects.all().order_by('-date')
+    
+    # Prepare celebrations with their photos for the template
+    celebration_data = []
+    for celebration in celebrations:
+        photos = celebration.celebrationphoto_set.all().order_by('order')
+        celebration_data.append({
+            'celebration': celebration,
+            'photos': photos,
+            'photo_count': photos.count()
+        })
+    
+    context = {
+        'celebration_data': celebration_data
+    }
+    
+    return render(request, 'gallery_new.html', context)
 
 #contact page
 def contact(request):
