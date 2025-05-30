@@ -1,12 +1,25 @@
 /* Header and Navbar Styling */
 .header-logo {
-  height: 70px;
+  height: 85px; /* Increased size from 70px to 85px */
   transition: transform 0.3s ease;
   margin-right: 15px;
+  user-select: none; /* Prevent text selection */
+  -webkit-user-drag: none; /* Prevent dragging in WebKit browsers */
+  -khtml-user-drag: none; /* Prevent dragging in Konqueror */
+  -moz-user-drag: none; /* Prevent dragging in Firefox */
+  -o-user-drag: none; /* Prevent dragging in Opera */
+  pointer-events: none; /* Disable pointer events on the image */
 }
 
 .header-logo:hover {
   transform: scale(1.05);
+}
+
+/* Logo container to handle clicks while logo remains protected */
+.logo-container {
+  position: relative;
+  display: inline-block;
+  pointer-events: auto; /* Enable pointer events on the container */
 }
 
 .navbar {

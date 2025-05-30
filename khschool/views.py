@@ -1,30 +1,32 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Celebration
+from .models import Celebration, CarouselImage
 # Create your views here.
 def home(request):
-    return render(request,'home.html')
+    # Handle the case where the CarouselImage table might not exist yet
+    try:
+        carousel_images = CarouselImage.objects.filter(is_active=True).order_by('order')
+    except Exception:
+        # If there's any error (like table doesn't exist), set carousel_images to empty list
+        carousel_images = []
+    
+    # Get celebration data for the home page
+    try:
+        celebrations = Celebration.objects.all().order_by('-date')[:3]
+    except Exception:
+        celebrations = []
+        
+    context = {
+        'carousel_images': carousel_images,
+        'celebration': celebrations
+    }
+    
+    return render(request, 'home.html', context)
 
 #gallery page
 def gallery(request):
-    # Get all celebrations with their related photos
-    celebrations = Celebration.objects.all().order_by('-date')
-    
-    # Prepare celebrations with their photos for the template
-    celebration_data = []
-    for celebration in celebrations:
-        photos = celebration.celebrationphoto_set.all().order_by('order')
-        celebration_data.append({
-            'celebration': celebration,
-            'photos': photos,
-            'photo_count': photos.count()
-        })
-    
-    context = {
-        'celebration_data': celebration_data
-    }
-    
-    return render(request, 'gallery_new.html', context)
+    celebrations = Celebration.objects.all()
+    return render(request,'gallery.html',{'celebration':celebrations})
 
 #contact page
 def contact(request):
