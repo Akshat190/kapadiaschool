@@ -3,18 +3,23 @@ from django.http import HttpResponse
 from .models import Celebration, CarouselImage
 # Create your views here.
 def home(request):
+    # Set default empty values
+    carousel_images = []
+    celebrations = []
+    
     # Handle the case where the CarouselImage table might not exist yet
     try:
         carousel_images = CarouselImage.objects.filter(is_active=True).order_by('order')
-    except Exception:
-        # If there's any error (like table doesn't exist), set carousel_images to empty list
-        carousel_images = []
+    except Exception as e:
+        # Just continue with empty list if there's an error
+        pass
     
     # Get celebration data for the home page
     try:
         celebrations = Celebration.objects.all().order_by('-date')[:3]
-    except Exception:
-        celebrations = []
+    except Exception as e:
+        # Just continue with empty list if there's an error
+        pass
         
     context = {
         'carousel_images': carousel_images,
