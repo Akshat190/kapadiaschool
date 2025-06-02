@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils import timezone
+from .fields import CarouselImageField, CelebrationImageField, GalleryImageField
 
 # Create your models here.
 class Celebration(models.Model):
@@ -15,10 +15,13 @@ class Celebration(models.Model):
     festivalname = models.CharField(max_length=255, verbose_name='Celebration Name')
     description = models.TextField(blank=True, verbose_name='Description')
     celebration_type = models.CharField(max_length=20, choices=CELEBRATION_TYPES, default='festival', verbose_name='Type')
-    # Original field for backward compatibility
+    
+    # Keep the original field for backward compatibility
     image = models.ImageField(upload_to='festival/images/', verbose_name='Main Image', blank=True, null=True)
-    # Supabase image URL field
-    image_url = models.CharField(max_length=500, verbose_name='Main Image (Supabase)', blank=True)
+    
+    # Add the new Supabase field
+    image_url = CelebrationImageField(verbose_name='Main Image (Supabase)', blank=True)
+    
     date = models.DateTimeField(verbose_name='Date')
     is_featured = models.BooleanField(default=False, verbose_name='Feature on Homepage')
     
@@ -33,7 +36,7 @@ class Celebration(models.Model):
     def photo_count(self):
         """Return the number of additional photos for this celebration"""
         return self.celebrationphoto_set.count()
-
+    
     def get_image_url(self):
         """Return the image URL, prioritizing Supabase URL if available"""
         if self.image_url:
@@ -46,10 +49,13 @@ class Celebration(models.Model):
 class CelebrationPhoto(models.Model):
     """Model for additional photos for a celebration"""
     celebration = models.ForeignKey(Celebration, on_delete=models.CASCADE)
-    # Original field for backward compatibility
+    
+    # Keep the original field for backward compatibility
     photo = models.ImageField(upload_to='festival/gallery/', verbose_name='Photo', blank=True, null=True)
-    # Supabase image URL field
-    photo_url = models.CharField(max_length=500, verbose_name='Photo (Supabase)', blank=True)
+    
+    # Add the new Supabase field
+    photo_url = GalleryImageField(verbose_name='Photo (Supabase)', blank=True)
+    
     caption = models.CharField(max_length=255, blank=True, verbose_name='Caption')
     order = models.IntegerField(default=0, verbose_name='Display Order')
     
@@ -60,90 +66,13 @@ class CelebrationPhoto(models.Model):
         
     def __str__(self):
         return f"{self.celebration.festivalname} - Photo {self.order}"
-
+    
     def get_photo_url(self):
         """Return the photo URL, prioritizing Supabase URL if available"""
         if self.photo_url:
             return self.photo_url
         if self.photo:
             return self.photo.url
-        return None
-
-class Gallery(models.Model):
-    """Model for gallery categories"""
-    CATEGORY_CHOICES = [
-        ('festival', 'Festival'),
-        ('event', 'School Event'),
-        ('sports', 'Sports Event'),
-        ('cultural', 'Cultural Event'),
-        ('academic', 'Academic Event'),
-        ('other', 'Other'),
-    ]
-    
-    name = models.CharField(max_length=100, verbose_name='Gallery Name')
-    description = models.TextField(blank=True, verbose_name='Description')
-    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='other', verbose_name='Category')
-    # Thumbnail image
-    thumbnail = models.ImageField(upload_to='gallery/thumbnails/', blank=True, null=True, verbose_name='Thumbnail')
-    # Supabase thumbnail URL
-    thumbnail_url = models.CharField(max_length=500, verbose_name='Thumbnail (Supabase)', blank=True)
-    date_created = models.DateTimeField(default=timezone.now, verbose_name='Date Created')
-    is_featured = models.BooleanField(default=False, verbose_name='Feature on Homepage')
-    
-    class Meta:
-        verbose_name = 'Gallery'
-        verbose_name_plural = 'Galleries'
-        ordering = ['-date_created']
-    
-    def __str__(self):
-        return self.name
-    
-    def image_count(self):
-        """Return the number of images in this gallery"""
-        return self.galleryimage_set.count()
-    
-    def get_thumbnail_url(self):
-        """Return the thumbnail URL, prioritizing Supabase URL if available"""
-        if self.thumbnail_url:
-            return self.thumbnail_url
-        if self.thumbnail:
-            return self.thumbnail.url
-        # If no thumbnail, try to get the first image in the gallery
-        first_image = self.galleryimage_set.first()
-        if first_image:
-            return first_image.get_image_url()
-        return None
-
-
-class GalleryImage(models.Model):
-    """Model for individual images in a gallery"""
-    gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100, blank=True, verbose_name='Title')
-    # Original field for backward compatibility
-    image = models.ImageField(upload_to='gallery/images/', blank=True, null=True, verbose_name='Image')
-    # Supabase image URL field
-    image_url = models.CharField(max_length=500, verbose_name='Image (Supabase)', blank=True)
-    caption = models.CharField(max_length=255, blank=True, verbose_name='Caption')
-    description = models.TextField(blank=True, verbose_name='Description')
-    date_added = models.DateTimeField(default=timezone.now, verbose_name='Date Added')
-    order = models.IntegerField(default=0, verbose_name='Display Order')
-    
-    class Meta:
-        verbose_name = 'Gallery Image'
-        verbose_name_plural = 'Gallery Images'
-        ordering = ['gallery', 'order', '-date_added']
-    
-    def __str__(self):
-        if self.title:
-            return f"{self.gallery.name} - {self.title}"
-        return f"{self.gallery.name} - Image {self.order}"
-    
-    def get_image_url(self):
-        """Return the image URL, prioritizing Supabase URL if available"""
-        if self.image_url:
-            return self.image_url
-        if self.image:
-            return self.image.url
         return None
 
 
@@ -164,10 +93,13 @@ class CarouselImage(models.Model):
     
     title = models.CharField(max_length=100)
     subtitle = models.CharField(max_length=200, blank=True)
-    # Original field for backward compatibility
+    
+    # Keep the original field for backward compatibility
     image = models.ImageField(upload_to='carousel/images/', blank=True, null=True)
-    # Supabase image URL field
-    image_url = models.CharField(max_length=500, verbose_name='Image (Supabase)', blank=True)
+    
+    # Add the new Supabase field
+    image_url = CarouselImageField(verbose_name='Image (Supabase)', blank=True)
+    
     button_text = models.CharField(max_length=50, default='Learn More')
     button_link = models.CharField(max_length=100, choices=URL_CHOICES, default='/')
     order = models.IntegerField(default=0, help_text='Order in which to display the carousel image')
@@ -180,7 +112,7 @@ class CarouselImage(models.Model):
     
     def __str__(self):
         return self.title
-
+    
     def get_image_url(self):
         """Return the image URL, prioritizing Supabase URL if available"""
         if self.image_url:

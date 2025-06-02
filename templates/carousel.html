@@ -20,12 +20,18 @@
       {% for image in carousel_images %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
           <div class="carousel-image-container">
-            <img src="{{ image.image.url }}" class="carousel-image" alt="{{ image.title }}">
+            {% if image.get_image_url %}
+              <img src="{{ image.get_image_url }}" class="carousel-image" alt="{{ image.title }}">
+            {% else %}
+              <img src="{% static 'images/placeholder.jpg' %}" class="carousel-image" alt="Placeholder">
+            {% endif %}
           </div>
           <div class="carousel-caption">
             <h2>{{ image.title }}</h2>
             <p>{{ image.subtitle }}</p>
-            <a href="{{ image.button_link }}" class="btn carousel-btn">{{ image.button_text }}</a>
+            {% if image.button_text and image.button_link %}
+              <a href="{{ image.button_link }}" class="btn carousel-btn">{{ image.button_text }}</a>
+            {% endif %}
           </div>
         </div>
       {% empty %}
@@ -63,16 +69,46 @@
       {% endfor %}
     </div>
     
-    <!-- Carousel Controls -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+    <!-- Standard Bootstrap Carousel Controls -->
+    <a class="carousel-control-prev" href="#homeCarousel" role="button" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
+    </a>
+    <a class="carousel-control-next" href="#homeCarousel" role="button" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
-    </button>
+    </a>
   </div>
 </div>
 
-
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize carousel with proper options
+    var carousel = document.querySelector('#homeCarousel');
+    var carouselInstance = new bootstrap.Carousel(carousel, {
+      interval: 5000,  // Auto-slide every 5 seconds
+      wrap: true,       // Loop back to first slide
+      keyboard: true    // Allow keyboard navigation
+    });
+    
+    // Fix for Supabase images
+    var carouselImages = document.querySelectorAll('.carousel-image');
+    carouselImages.forEach(function(img) {
+      // Check if image is from Supabase
+      if (img.src.includes('supabase.co')) {
+        img.onload = function() {
+          // Ensure image is properly positioned
+          this.style.position = 'absolute';
+          this.style.top = '50%';
+          this.style.left = '50%';
+          this.style.transform = 'translate(-50%, -50%)';
+          this.style.minWidth = '100%';
+          this.style.minHeight = '100%';
+          this.style.width = 'auto';
+          this.style.height = 'auto';
+          this.style.objectFit = 'cover';
+        };
+      }
+    });
+  });
+</script>

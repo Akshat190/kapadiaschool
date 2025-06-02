@@ -10,5 +10,6 @@ urlpatterns = [
     path('chattral/',views.chattral,name='chattral'),
     path('iffco/',views.iffco,name='iffco'),
     path('kadi/',views.kadi,name='kadi'),
+    path('image-test/',views.image_test,name='image_test'),
 ]
 

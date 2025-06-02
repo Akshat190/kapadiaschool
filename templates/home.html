@@ -36,7 +36,7 @@
           <div class="content-underline"></div>
           <p>Kapadia High School was founded in 1956, starting with a modest group of students eager to learn. Over the years, our institution has grown into a vibrant educational center, nurturing a diverse array of students who shine brightly both locally and internationally.</p>
           <p>Situated in the heart of the community, Kapadia High School is a co-educational English medium school dedicated to fostering academic excellence and personal growth in a supportive environment.</p>
-          <a href="{% url 'aboutSchool' %}" class="btn btn-primary mt-3">Learn More</a>
+          <a href="{% url 'aboutSchool' %}" class="view-all-btn mt-3">Learn More</a>
         </div>
       </div>
     </div>
@@ -61,7 +61,7 @@
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="celebration-card">
               <div class="celebration-img-container">
-                <img src="{{ celebration.image.url }}" alt="{{ celebration.festivalname }}" class="celebration-img">
+                <img src="{{ celebration.get_image_url }}" alt="{{ celebration.festivalname }}" class="celebration-img">
                 <div class="celebration-date">{{ celebration.date|date:"d M Y" }}</div>
               </div>
               <div class="celebration-content">
@@ -168,7 +168,7 @@
     </div>
     <div class="row mt-4">
       <div class="col-12 text-center">
-        <a href="{% url 'gallery' %}" class="btn btn-primary">View Full Gallery</a>
+        <a href="{% url 'gallery' %}" class="view-all-btn">View Full Gallery</a>
       </div>
     </div>
   </div>

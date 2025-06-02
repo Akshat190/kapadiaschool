@@ -22,6 +22,9 @@
   overflow: hidden;
   position: relative;
   background-color: #003264;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .carousel-image {
@@ -31,8 +34,12 @@
   transform: translate(-50%, -50%);
   min-width: 100%;
   min-height: 100%;
+  width: auto;
+  height: auto;
   object-fit: cover;
-  max-width: none;
+  object-position: center center;
+  margin: 0;
+  padding: 0;
 }
 
 /* Caption Styling */
@@ -83,6 +90,29 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Standard Bootstrap carousel controls with slight enhancements */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 5%;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  opacity: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 30px;
+  height: 30px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  background-size: 60%;
+  background-position: center;
+}
+
 /* Carousel Indicators */
 .carousel-indicators {
   bottom: 20px;
@@ -100,18 +130,6 @@
 .carousel-indicators button.active {
   background-color: #F4C430;
   transform: scale(1.2);
-}
-
-/* Carousel Controls */
-.carousel-control-prev, .carousel-control-next {
-  width: 5%;
-  opacity: 0.7;
-  transition: all 0.3s ease;
-}
-
-.carousel-control-prev:hover, .carousel-control-next:hover {
-  opacity: 1;
-  background-color: rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive Adjustments */
