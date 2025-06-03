@@ -59,51 +59,59 @@
       {% if celebration %}
         {% for celebration in celebration|slice:":3" %}
           <div class="col-lg-4 col-md-6 mb-4">
-            <div class="celebration-card">
-              <div class="celebration-img-container">
-                <img src="{{ celebration.get_image_url }}" alt="{{ celebration.festivalname }}" class="celebration-img">
-                <div class="celebration-date">{{ celebration.date|date:"d M Y" }}</div>
+            <a href="{% url 'gallery' %}?category={{ celebration.celebration_type }}" class="text-decoration-none">
+              <div class="celebration-card">
+                <div class="celebration-img-container">
+                  <img src="{{ celebration.get_image_url }}" alt="{{ celebration.festivalname }}" class="celebration-img">
+                  <div class="celebration-date">{{ celebration.date|date:"d M Y" }}</div>
+                </div>
+                <div class="celebration-content">
+                  <h3 class="celebration-name">{{ celebration.festivalname }}</h3>
+                </div>
               </div>
-              <div class="celebration-content">
-                <h3 class="celebration-name">{{ celebration.festivalname }}</h3>
-              </div>
-            </div>
+            </a>
           </div>
         {% endfor %}
       {% else %}
         <!-- Default celebrations if none in database -->
         <div class="col-lg-4 col-md-6 mb-4">
-          <div class="celebration-card">
-            <div class="celebration-img-container">
-              <img src="https://images.unsplash.com/photo-1602631985686-1bb0e6a8696e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Diwali Celebration" class="celebration-img">
-              <div class="celebration-date">15 Nov 2024</div>
+          <a href="{% url 'gallery' %}?category=festival" class="text-decoration-none">
+            <div class="celebration-card">
+              <div class="celebration-img-container">
+                <img src="https://images.unsplash.com/photo-1602631985686-1bb0e6a8696e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Diwali Celebration" class="celebration-img">
+                <div class="celebration-date">15 Nov 2024</div>
+              </div>
+              <div class="celebration-content">
+                <h3 class="celebration-name">Diwali Celebration</h3>
+              </div>
             </div>
-            <div class="celebration-content">
-              <h3 class="celebration-name">Diwali Celebration</h3>
-            </div>
-          </div>
+          </a>
         </div>
         <div class="col-lg-4 col-md-6 mb-4">
-          <div class="celebration-card">
-            <div class="celebration-img-container">
-              <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Republic Day" class="celebration-img">
-              <div class="celebration-date">26 Jan 2025</div>
+          <a href="{% url 'gallery' %}?category=national" class="text-decoration-none">
+            <div class="celebration-card">
+              <div class="celebration-img-container">
+                <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Republic Day" class="celebration-img">
+                <div class="celebration-date">26 Jan 2025</div>
+              </div>
+              <div class="celebration-content">
+                <h3 class="celebration-name">Republic Day</h3>
+              </div>
             </div>
-            <div class="celebration-content">
-              <h3 class="celebration-name">Republic Day</h3>
-            </div>
-          </div>
+          </a>
         </div>
         <div class="col-lg-4 col-md-6 mb-4">
-          <div class="celebration-card">
-            <div class="celebration-img-container">
-              <img src="https://images.unsplash.com/photo-1472162072942-cd5147eb3902?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="Annual Day" class="celebration-img">
-              <div class="celebration-date">10 Dec 2024</div>
+          <a href="{% url 'gallery' %}?category=annual" class="text-decoration-none">
+            <div class="celebration-card">
+              <div class="celebration-img-container">
+                <img src="https://images.unsplash.com/photo-1472162072942-cd5147eb3902?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="Annual Day" class="celebration-img">
+                <div class="celebration-date">10 Dec 2024</div>
             </div>
             <div class="celebration-content">
               <h3 class="celebration-name">Annual Day</h3>
             </div>
           </div>
+          </a>
         </div>
       {% endif %}
     </div>

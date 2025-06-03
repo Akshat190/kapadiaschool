@@ -33,9 +33,9 @@
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
           <div class="carousel-image-container">
             {% if image.get_image_url %}
-              <img src="{{ image.get_image_url }}" class="carousel-image" alt="{{ image.title }}" loading="eager" crossorigin="anonymous">
+              <img src="{{ image.get_image_url }}" class="carousel-image" alt="{{ image.title }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" crossorigin="anonymous" fetchpriority="{% if forloop.first %}high{% else %}low{% endif %}">
             {% else %}
-              <img src="{% static 'images/placeholder.jpg' %}" class="carousel-image" alt="Placeholder" loading="eager">
+              <img src="{% static 'images/placeholder.jpg' %}" class="carousel-image" alt="Placeholder" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" fetchpriority="{% if forloop.first %}high{% else %}low{% endif %}">
             {% endif %}
           </div>
           <div class="carousel-caption">

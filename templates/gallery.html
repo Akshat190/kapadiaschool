@@ -30,7 +30,7 @@
         {% for gallery in galleries %}
           <div class="gallery-item" data-category="{{ gallery.category }}">
             <div class="gallery-image-container">
-              <img src="{{ gallery.get_thumbnail_url }}" alt="{{ gallery.name }}" class="gallery-image">
+              <img src="{{ gallery.get_thumbnail_url }}" alt="{{ gallery.name }}" class="gallery-image" loading="lazy" decoding="async">
               <div class="gallery-overlay">
                 <div class="gallery-info">
                   <h3>{{ gallery.name }}</h3>

@@ -2,7 +2,7 @@
 <!--Footer Start -->
 <footer class="footer">
   <div class="container">
-    <div class="row">
+    <div class="row" style="display: flex; flex-wrap: wrap;">
       <div class="footer-col col">
         <h4>Kapadia High School </h4>
         <div class="social-links">
@@ -49,12 +49,14 @@
     background-color: #003264;
     padding: 50px 0;
     color: white;
-    margin-top: 50px;
+    margin-top: auto;
   }
   
   .footer-col {
     width: 25%;
     padding: 0 15px;
+    flex: 1 1 25%;
+    min-width: 200px;
   }
   
   .footer-col h4 {
@@ -110,6 +112,9 @@
     margin-bottom: 20px;
     font-size: 14px;
     line-height: 1.6;
+    word-wrap: break-word;
+    max-width: 100%;
+    overflow-wrap: break-word;
   }
   
   @media (max-width: 767px) {

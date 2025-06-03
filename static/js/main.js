@@ -51,12 +51,16 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.querySelector('.map-tab-btn')) {
         const mapButtons = document.querySelectorAll('.map-tab-btn');
         
+        // Add click event listeners to map buttons
         mapButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const mapId = this.getAttribute('onclick').match(/'([^']+)'/)[1];
                 showMap(mapId);
             });
         });
+        
+        // Initialize the first map (map1) by default
+        showMap('map1');
     }
 });
 
