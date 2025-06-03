@@ -34,7 +34,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-5u@dx-_uxrvvj$%)$@bi!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 # Configure hosts for Render deployment
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','test-6kvx.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','kapadiahighschool.com']
 
 # Configure RENDER_EXTERNAL_HOSTNAME for Render
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
