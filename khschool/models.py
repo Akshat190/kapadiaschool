@@ -1,5 +1,17 @@
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
+
+# Import the Supabase delete function
+try:
+    from .supabase_storage import delete_image
+except ImportError:
+    # Fallback if supabase_storage module is not available
+    def delete_image(file_path, bucket_name):
+        print(f"Mock delete: {file_path} from {bucket_name}")
+        return False
 
 # Create your models here.
 class Celebration(models.Model):
@@ -35,11 +47,20 @@ class Celebration(models.Model):
         return self.celebrationphoto_set.count()
 
     def get_image_url(self):
-        """Return the image URL, prioritizing Supabase URL if available"""
-        if self.image_url:
-            return self.image_url
-        if self.image:
-            return self.image.url
+        """Return the image URL, prioritizing Supabase URL in production"""
+        # In production with Supabase configured, prioritize Supabase URLs
+        if not settings.DEBUG and settings.USE_SUPABASE_STORAGE:
+            if self.image_url:
+                return self.image_url
+            if self.image:
+                return self.image.url
+        # In development or without Supabase, prioritize local files
+        else:
+            if self.image:
+                return self.image.url
+            if self.image_url:
+                return self.image_url
+        
         return None
 
 
@@ -62,11 +83,20 @@ class CelebrationPhoto(models.Model):
         return f"{self.celebration.festivalname} - Photo {self.order}"
 
     def get_photo_url(self):
-        """Return the photo URL, prioritizing Supabase URL if available"""
-        if self.photo_url:
-            return self.photo_url
-        if self.photo:
-            return self.photo.url
+        """Return the photo URL, prioritizing Supabase URL in production"""
+        # In production with Supabase configured, prioritize Supabase URLs
+        if not settings.DEBUG and settings.USE_SUPABASE_STORAGE:
+            if self.photo_url:
+                return self.photo_url
+            if self.photo:
+                return self.photo.url
+        # In development or without Supabase, prioritize local files
+        else:
+            if self.photo:
+                return self.photo.url
+            if self.photo_url:
+                return self.photo_url
+        
         return None
 
 class Gallery(models.Model):
@@ -103,11 +133,20 @@ class Gallery(models.Model):
         return self.galleryimage_set.count()
     
     def get_thumbnail_url(self):
-        """Return the thumbnail URL, prioritizing Supabase URL if available"""
-        if self.thumbnail_url:
-            return self.thumbnail_url
-        if self.thumbnail:
-            return self.thumbnail.url
+        """Return the thumbnail URL, prioritizing Supabase URL in production"""
+        # In production with Supabase configured, prioritize Supabase URLs
+        if not settings.DEBUG and settings.USE_SUPABASE_STORAGE:
+            if self.thumbnail_url:
+                return self.thumbnail_url
+            if self.thumbnail:
+                return self.thumbnail.url
+        # In development or without Supabase, prioritize local files
+        else:
+            if self.thumbnail:
+                return self.thumbnail.url
+            if self.thumbnail_url:
+                return self.thumbnail_url
+        
         # If no thumbnail, try to get the first image in the gallery
         first_image = self.galleryimage_set.first()
         if first_image:
@@ -139,11 +178,20 @@ class GalleryImage(models.Model):
         return f"{self.gallery.name} - Image {self.order}"
     
     def get_image_url(self):
-        """Return the image URL, prioritizing Supabase URL if available"""
-        if self.image_url:
-            return self.image_url
-        if self.image:
-            return self.image.url
+        """Return the image URL, prioritizing Supabase URL in production"""
+        # In production with Supabase configured, prioritize Supabase URLs
+        if not settings.DEBUG and settings.USE_SUPABASE_STORAGE:
+            if self.image_url:
+                return self.image_url
+            if self.image:
+                return self.image.url
+        # In development or without Supabase, prioritize local files
+        else:
+            if self.image:
+                return self.image.url
+            if self.image_url:
+                return self.image_url
+        
         return None
 
 
@@ -182,9 +230,97 @@ class CarouselImage(models.Model):
         return self.title
 
     def get_image_url(self):
-        """Return the image URL, prioritizing Supabase URL if available"""
-        if self.image_url:
-            return self.image_url
-        if self.image:
-            return self.image.url
+        """Return the image URL, prioritizing Supabase URL in production"""
+        # In production with Supabase configured, prioritize Supabase URLs
+        if not settings.DEBUG and settings.USE_SUPABASE_STORAGE:
+            if self.image_url:
+                return self.image_url
+            if self.image:
+                return self.image.url
+        # In development or without Supabase, prioritize local files
+        else:
+            if self.image:
+                return self.image.url
+            if self.image_url:
+                return self.image_url
+        
         return None
+
+# Add signal receivers at the end of the file
+@receiver(pre_delete, sender=Celebration)
+def delete_celebration_image(sender, instance, **kwargs):
+    """Delete the Supabase image when a Celebration is deleted"""
+    if instance.image_url:
+        # Extract file path from URL
+        try:
+            # URL format is typically https://...storage/v1/object/public/bucket-name/file-path
+            parts = instance.image_url.split('/')
+            bucket_index = parts.index('public') + 1
+            bucket_name = parts[bucket_index]
+            file_path = '/'.join(parts[bucket_index + 1:])
+            
+            # Delete from Supabase
+            delete_image(file_path, bucket_name)
+            print(f"Deleted image {file_path} from bucket {bucket_name}")
+        except Exception as e:
+            print(f"Error deleting Supabase image: {e}")
+
+@receiver(pre_delete, sender=CelebrationPhoto)
+def delete_celebration_photo(sender, instance, **kwargs):
+    """Delete the Supabase photo when a CelebrationPhoto is deleted"""
+    if instance.photo_url:
+        try:
+            parts = instance.photo_url.split('/')
+            bucket_index = parts.index('public') + 1
+            bucket_name = parts[bucket_index]
+            file_path = '/'.join(parts[bucket_index + 1:])
+            
+            delete_image(file_path, bucket_name)
+            print(f"Deleted photo {file_path} from bucket {bucket_name}")
+        except Exception as e:
+            print(f"Error deleting Supabase photo: {e}")
+
+@receiver(pre_delete, sender=Gallery)
+def delete_gallery_thumbnail(sender, instance, **kwargs):
+    """Delete the Supabase thumbnail when a Gallery is deleted"""
+    if instance.thumbnail_url:
+        try:
+            parts = instance.thumbnail_url.split('/')
+            bucket_index = parts.index('public') + 1
+            bucket_name = parts[bucket_index]
+            file_path = '/'.join(parts[bucket_index + 1:])
+            
+            delete_image(file_path, bucket_name)
+            print(f"Deleted thumbnail {file_path} from bucket {bucket_name}")
+        except Exception as e:
+            print(f"Error deleting Supabase thumbnail: {e}")
+
+@receiver(pre_delete, sender=GalleryImage)
+def delete_gallery_image(sender, instance, **kwargs):
+    """Delete the Supabase image when a GalleryImage is deleted"""
+    if instance.image_url:
+        try:
+            parts = instance.image_url.split('/')
+            bucket_index = parts.index('public') + 1
+            bucket_name = parts[bucket_index]
+            file_path = '/'.join(parts[bucket_index + 1:])
+            
+            delete_image(file_path, bucket_name)
+            print(f"Deleted gallery image {file_path} from bucket {bucket_name}")
+        except Exception as e:
+            print(f"Error deleting Supabase gallery image: {e}")
+
+@receiver(pre_delete, sender=CarouselImage)
+def delete_carousel_image(sender, instance, **kwargs):
+    """Delete the Supabase image when a CarouselImage is deleted"""
+    if instance.image_url:
+        try:
+            parts = instance.image_url.split('/')
+            bucket_index = parts.index('public') + 1
+            bucket_name = parts[bucket_index]
+            file_path = '/'.join(parts[bucket_index + 1:])
+            
+            delete_image(file_path, bucket_name)
+            print(f"Deleted carousel image {file_path} from bucket {bucket_name}")
+        except Exception as e:
+            print(f"Error deleting Supabase carousel image: {e}")

@@ -1,7 +1,19 @@
 {% load static %}
 <link href="{% static 'css/carousel.css' %}" rel='stylesheet' type='text/css'>
 
-<div class="carousel-container">
+<!-- Preload CSS to ensure faster loading -->
+<style>
+  /* Preload styling for carousel images */
+  .preload-carousel-images {
+    position: absolute; 
+    width: 1px; 
+    height: 1px; 
+    opacity: 0; 
+    z-index: -1;
+  }
+</style>
+
+<div class="carousel-container" id="home-carousel-container">
   <!-- Carousel Indicators -->
   <div id="homeCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -21,9 +33,9 @@
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
           <div class="carousel-image-container">
             {% if image.get_image_url %}
-              <img src="{{ image.get_image_url }}" class="carousel-image" alt="{{ image.title }}">
+              <img src="{{ image.get_image_url }}" class="carousel-image" alt="{{ image.title }}" loading="eager" crossorigin="anonymous">
             {% else %}
-              <img src="{% static 'images/placeholder.jpg' %}" class="carousel-image" alt="Placeholder">
+              <img src="{% static 'images/placeholder.jpg' %}" class="carousel-image" alt="Placeholder" loading="eager">
             {% endif %}
           </div>
           <div class="carousel-caption">
@@ -38,7 +50,7 @@
         <!-- Default carousel items if no images in database -->
         <div class="carousel-item active">
           <div class="carousel-image-container">
-            <img src="{% static 'image/carousel1.jpg' %}" class="carousel-image" alt="School Campus">
+            <img src="{% static 'images/placeholder.jpg' %}" class="carousel-image" alt="School Campus" loading="eager">
           </div>
           <div class="carousel-caption">
             <h2>Welcome to Kapadia High School</h2>
@@ -48,7 +60,7 @@
         </div>
         <div class="carousel-item">
           <div class="carousel-image-container">
-            <img src="{% static 'image/carousel2.jpg' %}" class="carousel-image" alt="Students">
+            <img src="{% static 'images/placeholder.jpg' %}" class="carousel-image" alt="Students" loading="eager">
           </div>
           <div class="carousel-caption">
             <h2>Excellence in Education</h2>
@@ -58,7 +70,7 @@
         </div>
         <div class="carousel-item">
           <div class="carousel-image-container">
-            <img src="{% static 'image/carousel3.jpg' %}" class="carousel-image" alt="School Activities">
+            <img src="{% static 'images/placeholder.jpg' %}" class="carousel-image" alt="School Activities" loading="eager">
           </div>
           <div class="carousel-caption">
             <h2>Holistic Development</h2>
@@ -83,32 +95,68 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Preload all carousel images to prevent delayed loading
+    function preloadCarouselImages() {
+      var carouselImages = document.querySelectorAll('.carousel-image');
+      var preloadDiv = document.createElement('div');
+      preloadDiv.className = 'preload-carousel-images';
+      document.body.appendChild(preloadDiv);
+      
+      carouselImages.forEach(function(img) {
+        var imgSrc = img.getAttribute('src');
+        if (imgSrc) {
+          var preloadImg = new Image();
+          preloadImg.src = imgSrc;
+          preloadDiv.appendChild(preloadImg);
+        }
+      });
+    }
+    
+    // Call preload function
+    preloadCarouselImages();
+    
     // Initialize carousel with proper options
     var carousel = document.querySelector('#homeCarousel');
     var carouselInstance = new bootstrap.Carousel(carousel, {
       interval: 5000,  // Auto-slide every 5 seconds
       wrap: true,       // Loop back to first slide
-      keyboard: true    // Allow keyboard navigation
+      keyboard: true,   // Allow keyboard navigation
+      pause: false      // Don't pause on hover
     });
     
     // Fix for Supabase images
     var carouselImages = document.querySelectorAll('.carousel-image');
     carouselImages.forEach(function(img) {
-      // Check if image is from Supabase
-      if (img.src.includes('supabase.co')) {
-        img.onload = function() {
-          // Ensure image is properly positioned
-          this.style.position = 'absolute';
-          this.style.top = '50%';
-          this.style.left = '50%';
-          this.style.transform = 'translate(-50%, -50%)';
-          this.style.minWidth = '100%';
-          this.style.minHeight = '100%';
-          this.style.width = 'auto';
-          this.style.height = 'auto';
-          this.style.objectFit = 'cover';
-        };
-      }
+      // Add loading="eager" to prioritize loading
+      img.setAttribute('loading', 'eager');
+      
+      // Add a placeholder background color while loading
+      img.style.backgroundColor = '#003264';
+      
+      // Apply styles immediately instead of waiting for onload
+      img.style.position = 'absolute';
+      img.style.top = '50%';
+      img.style.left = '50%';
+      img.style.transform = 'translate(-50%, -50%)';
+      img.style.minWidth = '100%';
+      img.style.minHeight = '100%';
+      img.style.width = 'auto';
+      img.style.height = 'auto';
+      img.style.objectFit = 'cover';
+      
+      // Handle image loading
+      img.onload = function() {
+        // Just update opacity when loaded
+        this.style.opacity = '1';
+      };
+      
+      // Handle loading errors
+      img.onerror = function() {
+        // If image fails to load, replace with placeholder
+        if (!img.src.includes('placeholder.jpg')) {
+          img.src = '{% static "images/placeholder.jpg" %}';
+        }
+      };
     });
   });
 </script>

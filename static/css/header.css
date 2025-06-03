@@ -1,6 +1,8 @@
 /* Header and Navbar Styling */
 .header-logo {
-  height: 85px; /* Increased size from 70px to 85px */
+  height: 100px; /* Increased size from 85px to 100px */
+  width: auto; /* Maintain aspect ratio */
+  object-fit: contain; /* Ensure the image fits without stretching */
   transition: transform 0.3s ease;
   margin-right: 15px;
   user-select: none; /* Prevent text selection */
@@ -9,6 +11,8 @@
   -moz-user-drag: none; /* Prevent dragging in Firefox */
   -o-user-drag: none; /* Prevent dragging in Opera */
   pointer-events: none; /* Disable pointer events on the image */
+  image-rendering: -webkit-optimize-contrast; /* Improve rendering in Chrome */
+  image-rendering: crisp-edges; /* Improve rendering in Firefox */
 }
 
 .header-logo:hover {
@@ -18,13 +22,17 @@
 /* Logo container to handle clicks while logo remains protected */
 .logo-container {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   pointer-events: auto; /* Enable pointer events on the container */
+  padding: 5px 0; /* Add some padding to give the logo more space */
 }
 
 .navbar {
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   background-color: #003264;
+  padding: 0.5rem 1rem; /* Adjust padding to give more height */
+  min-height: 110px; /* Set minimum height to accommodate the logo */
 }
 
 .navbar .nav-link {

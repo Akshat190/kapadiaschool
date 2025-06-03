@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import dj_database_url
 from dotenv import load_dotenv
+from decouple import config
 
 # Load environment variables from .env file
 load_dotenv()
@@ -29,15 +30,32 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-5u@dx-_uxrvvj$%)$@bi!$w15a+$hi@^l-9i##lspe(rgr28jj')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# Temporarily enabling DEBUG in production to identify the error
-DEBUG = True
+# Set DEBUG based on environment variable
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['*']
+# Configure hosts for Render deployment
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','test-6kvx.onrender.com']
 
 # Configure RENDER_EXTERNAL_HOSTNAME for Render
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+# Add Render internal and external domains
+RENDER_EXTERNAL_URL = os.environ.get('RENDER_EXTERNAL_URL')
+if RENDER_EXTERNAL_URL:
+    ALLOWED_HOSTS.extend([RENDER_EXTERNAL_URL, f'*.{RENDER_EXTERNAL_URL}'])
+
+# In production, allow the Render assigned domain
+ALLOWED_HOSTS.extend(['.onrender.com'])
+
+# CSRF Trusted Origins for Render
+CSRF_TRUSTED_ORIGINS = [
+    'https://test-6kvx.onrender.com',
+    'https://*.onrender.com',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+]
 
 
 # Application definition
@@ -88,14 +106,79 @@ WSGI_APPLICATION = 'kapadiaschool.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# Database configuration with support for Render PostgreSQL
-DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
-        conn_max_age=600
-    )
-}
+# Database configuration - uses PostgreSQL in production, SQLite in development
+if 'DATABASE_URL' in os.environ:
+    db_url = os.environ.get('DATABASE_URL')
+    # Check if it's PostgreSQL before applying SSL requirements
+    if db_url.startswith('postgres'):
+        # Check if we're running on Render (internal hostname will be accessible)
+        is_on_render = os.environ.get('RENDER', '') == 'true' or 'RENDER_EXTERNAL_HOSTNAME' in os.environ
+        
+        # Log database connection attempt
+        print(f"Connecting to PostgreSQL database: {db_url.split('@')[1].split('/')[0]}")
+        
+        # Only try to connect to PostgreSQL if we're on Render
+        # Otherwise, fall back to SQLite for local development
+        if is_on_render:
+            # Production database (PostgreSQL on Render)
+            DATABASES = {
+                'default': dj_database_url.parse(
+                    config('DATABASE_URL'),
+                    # conn_max_age=600,
+                    # ssl_require=True
+                )
+            }
+            
+            # Print database settings for debugging
+            print(f"Database engine: {DATABASES['default']['ENGINE']}")
+            print(f"Database name: {DATABASES['default']['NAME']}")
+            print(f"Database host: {DATABASES['default']['HOST']}")
+        else:
+            # We're local but have a DATABASE_URL - use SQLite instead
+            print("Not on Render but DATABASE_URL is set. Using SQLite for local development.")
+            DATABASES = {
+                'default': {
+                    'ENGINE': 'django.db.backends.sqlite3',
+                    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+                }
+            }
+    else:
+        # SQLite or other database with URL format
+        DATABASES = {
+            'default': dj_database_url.config(
+                conn_max_age=600
+            )
+        }
+else:
+    # Development database (SQLite)
+    print("Using SQLite database for local development")
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
+# Supabase configuration
+SUPABASE_URL = os.environ.get('SUPABASE_URL', '')
+SUPABASE_KEY = os.environ.get('SUPABASE_KEY', '')
+USE_SUPABASE_STORAGE = bool(SUPABASE_URL and SUPABASE_KEY)
+
+# Media files (uploads)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'gallery')
+MEDIA_URL = '/gallery/'
+
+# Configure media storage
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+
+# Log Supabase status
+if USE_SUPABASE_STORAGE:
+    print(f"Supabase URL: {SUPABASE_URL[:10]}...")
+    print(f"Supabase Key: {SUPABASE_KEY[:10]}...")
+    print("Supabase storage is enabled")
+else:
+    print("WARNING: Supabase storage is not configured. Using local file storage only.")
+    print("Set SUPABASE_URL and SUPABASE_KEY environment variables to enable Supabase storage.")
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -147,6 +230,3 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-MEDIA_ROOT = os.path.join(BASE_DIR,'gallery')
-MEDIA_URL = '/gallery/'

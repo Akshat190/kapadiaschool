@@ -49,22 +49,20 @@ h4,
   color: #fff;
 }
 
-/* Carousel Styles */
-.carousel-container {
+/* Base Carousel Styles - specific styling in carousel.css */
+/* These styles are overridden by carousel.css for the homepage carousel */
+.carousel-container:not(#homeCarousel .carousel-container) {
   width: 100%;
-  height: 100vh;
   position: relative;
 }
 
-.carousel-inner {
+.carousel-inner:not(#homeCarousel .carousel-inner) {
   width: 100%;
-  height: 100%;
 }
 
-.carousel-item img {
+.carousel-item img:not(.carousel-image) {
   object-fit: cover;
   width: 100%;
-  height: 100vh;
   animation: fadeIn 2s ease-in-out;
 }
 
@@ -87,12 +85,12 @@ h4,
 
 /* Responsive Adjustments */
 @media (max-width: 767.98px) {
-  .carousel-container {
-    height: 60vh;
+  .carousel-container:not(#homeCarousel .carousel-container) {
+    height: auto;
   }
 
-  .carousel-item img {
-    height: 60vh;
+  .carousel-item img:not(.carousel-image) {
+    height: auto;
   }
 }
 
@@ -179,12 +177,12 @@ h4,
     background-color: #003264;
   }
 
-  .carousel-container {
-    height: 60vh;
+  .carousel-container:not(#homeCarousel .carousel-container) {
+    height: auto;
   }
 
-  .carousel-item img {
-    height: 60vh;
+  .carousel-item img:not(.carousel-image) {
+    height: auto;
   }
 
   .footer {
