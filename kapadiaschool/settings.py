@@ -47,11 +47,12 @@ if RENDER_EXTERNAL_URL:
     ALLOWED_HOSTS.extend([RENDER_EXTERNAL_URL, f'*.{RENDER_EXTERNAL_URL}'])
 
 # In production, allow the Render assigned domain
-ALLOWED_HOSTS.extend(['.onrender.com'])
+ALLOWED_HOSTS.extend(['.com'])
 
 # CSRF Trusted Origins for Render
 CSRF_TRUSTED_ORIGINS = [
-    'https://kapadiahighschool.com/',
+    'https://kapadiahighschool.com',
+    'https://www.kapadiahighschool.com',
     # 'https://*.onrender.com',
     'http://localhost:8000',
     'http://127.0.0.1:8000',
