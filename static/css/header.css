@@ -1,6 +1,6 @@
 /* Header and Navbar Styling */
 .header-logo {
-  height: 100px; /* Base size for desktop */
+  height: 130px; /* Base size for desktop */
   width: auto; /* Maintain aspect ratio */
   max-width: 100%; /* Ensure it doesn't overflow container */
   object-fit: contain; /* Ensure the image fits without stretching */
