@@ -11,12 +11,12 @@ def test_connection():
     try:
         # Connection parameters
         conn_params = {
-            'dbname': 'test_db_1gkb',
-            'user': 'test_db_1gkb_user',
-            'password': 'QGeIXVtCWntGCgz463NxSbfRk70Y7hXW',
-            'host': 'dpg-cu0r14l2ng1s73e22fbg-a.oregon-postgres.render.com',
-            'port': '5432',
-            'sslmode': 'require'
+        'dbname': 'kapadia_school_eq0q',
+        'user': 'kapadia_school_eq0q_user',
+        'password': 'IfB7rPNBSh7314VKpkojIATHjvkEEyuT',
+        'host': 'dpg-d1l58qfdiees73f7ocu0-a.oregon-postgres.render.com',
+        'port': '5432',
+        'sslmode': 'require'
         }
         
         # Connect to the database
